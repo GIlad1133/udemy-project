@@ -1,5 +1,7 @@
 <?php
 use App\Post;
+use Illuminate\Support\Facades\Log;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,8 +60,9 @@ use App\Post;
 //        return $posts->title;
 //
 //});
-Route::get('posts/thank', function(){
-    return view('posts.after-send-request');
+Route::get('/thank', function(){
+    $alltitles = Post::all();
+    return view('posts.after-send-request', compact('alltitles'));
 });
 Route::resource('/posts', 'PostsController');
 Route::get('posts/create', function(){

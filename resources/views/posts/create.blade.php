@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <form method ="post" action="/posts" id="123">
         {{csrf_field()}}
     <div>
@@ -36,13 +37,15 @@
 
     </script>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
 
-
-
-
-
-
-
-    @yield('footer')
 

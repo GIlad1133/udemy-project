@@ -15,7 +15,13 @@
         </p>
     </div>
 
+    <ul>
+{{--@foreach($alltitles as $title)--}}
 
+            <li>{{ $alltitles->last()->title }}</li>
+    {{--@endforeach--}}
 
-    @yield('footer')
+    </ul>
+
+@endsection
 

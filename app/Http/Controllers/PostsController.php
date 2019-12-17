@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBlogPost;
 
 class PostsController extends Controller
 {
@@ -14,7 +15,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-//        return "hello!" . $id;
+        $posts = Post::all();
+        $post = Post::first();
+        return view('posts.index', compact('posts', 'post'));
     }
 
     /**
@@ -24,8 +27,6 @@ class PostsController extends Controller
      */
     public function create()
     {
-
-
 
     }
 
@@ -37,19 +38,21 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlogPost $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-                                            ]);
+
+        $validated = $request->validated();
+//        $validatedData = $request->validate([
+//            'title' => 'required',
+//            'body' => 'required',
+//                                            ]);
         $posts = new Post;
         $posts->title = $request->title;
         $posts->body = $request->body;
         $posts->is_admin = $request->is_admin;
-
         $posts->save();
-        return redirect('/posts/thank');
+
+        return redirect('/thank');
     }
 
     /**
@@ -61,6 +64,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
 
     }
 
@@ -73,7 +78,11 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        {
+            $post = Post::findOrFail($id);
+            return view('posts.edit', compact('post'));
+
+        }
     }
 
     /**
@@ -86,7 +95,12 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->is_admin = $request->is_admin;
+        $post->save();
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -112,7 +126,6 @@ class PostsController extends Controller
 //        //return view('post')->with('id', $id);
 //        return view('post', compact('id', 'name', 'pass'));
 //    }
-
 }
 
 

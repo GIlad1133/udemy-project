@@ -2,47 +2,29 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method ="get" action="" id="123">
+    <h1> Edit Post</h1>
+    <form method ="post" action="/posts/{{$post->id}}" id="123">
         {{csrf_field()}}
+        <input type="hidden" name="_method" value="PUT">
+
         <div>
-            <input type="text" name="title" placeholder="Enter title" id="title">
+            <input type="text" name="title" placeholder="Enter title" id="title" value="{{$post->title}}">
         </div>
         <div>
 
-            <input type="text" name="body" placeholder="Enter body" required>
+            <input type="text" name="body" placeholder="Enter body" value="{{$post->body}}" required>
         </div>
         <div>
-            <input type="text" name="is_admin" placeholder="Enter command" required>
+            <input type="text" name="is_admin" placeholder="Enter command" value="{{$post->is_admin}}" required>
 
         </div>
         <input type="submit" name = "submit" onClick="return empty()">
 
     </form>
-
-    <script>
-
-        function empty()
-        {
-            var x;
-            x = document.getElementById("title").value;
-            if (!x)
-            {
-                alert("Enter a Valid title");
-                return false;
-            } else {
-
-            };
-        }
-
-    </script>
+    @endsection
 
 
 
 
 
-
-
-
-
-    @yield('footer')
 
