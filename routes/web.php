@@ -1,6 +1,7 @@
 <?php
 use App\Post;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,26 @@ Route::resource('/posts', 'PostsController');
 Route::get('posts/create', function(){
     return view('posts.create');
 });
+Route::get('/dates', function (){
+  $date = new DateTime('+1 week');
+  echo $date->format('d-m-y');
 
+  echo '<br>';
+
+  echo Carbon::now()->addDays(7)->diffForHumans();
+});
+
+Route::get('/getname', function(){
+    $post = Post::find(1);
+    echo $post->title;
+});
+
+Route::get('/setname', function(){
+    $post = Post::find(1);
+    $post->title = 'gilard';
+    $post->save();
+    //echo $post->title;
+});
 
 
 //Route::get('posts/thankyou2', function()

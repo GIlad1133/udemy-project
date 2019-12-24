@@ -16,8 +16,10 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::all();
-        $post = Post::first();
-        return view('posts.index', compact('posts', 'post'));
+
+//        $posts = Post::all();
+//        $post = Post::first();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -41,18 +43,29 @@ class PostsController extends Controller
     public function store(StoreBlogPost $request)
     {
 
-        $validated = $request->validated();
+        $input = $request->all();
+        if($file = $request->file('fileToUpload')){
+            $name = $file->getClientOriginalName();
+            $file->move('images', $name);
+            $input['post_photo'] = $name;
+        }
+
+        Post::create($input);
+        return redirect('/thank');
+
+//        $validated = $request->validated();
 //        $validatedData = $request->validate([
 //            'title' => 'required',
 //            'body' => 'required',
 //                                            ]);
-        $posts = new Post;
-        $posts->title = $request->title;
-        $posts->body = $request->body;
-        $posts->is_admin = $request->is_admin;
-        $posts->save();
-
-        return redirect('/thank');
+//       $posts = new Post;
+//        $posts->title = $request->title;
+//        $posts->body = $request->body;
+//        $posts->is_admin = $request->is_admin;
+//        $posts->post_photo = $request->file('fileToUpload');
+//        $posts->save();
+//
+//        return redirect('/thank');
     }
 
     /**

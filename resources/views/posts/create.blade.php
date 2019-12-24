@@ -1,24 +1,29 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 @extends('layouts.app')
 
 @section('content')
-
-    <form method ="post" action="/posts" id="123">
+    <div class="container">
+        <div class="row">
+    <form method ="post" action="/posts" id="123" enctype="multipart/form-data">
         {{csrf_field()}}
-    <div>
-        <input type="text" name="title" placeholder="Enter title" id="title">
-    </div>
-        <div>
-
-        <input type="text" name="body" placeholder="Enter body" required>
+        <div class="form-group">
+        <input type="text" name="title" placeholder="Enter Title" id="title" class="form-control" >
         </div>
-        <div>
-            <input type="text" name="is_admin" placeholder="Enter command" required>
-
+        <div class="form-group">
+            <input type="text" name="body" placeholder="Enter Body" class="form-control" required>
         </div>
-        <input type="submit" name = "submit" onClick="return empty()">
+        <div class="form-group">
+            <input type="text" name="is_admin" placeholder="Enter Admin Token" class="form-control" required>
+        </div>
+        <input type="file" name="fileToUpload" id="file" placeholder="Select image to upload">
+       <div  style="text-align:center">
+        <input type="submit" name ="submit"  class="btn btn-primary" onClick="return empty()">
+       </div>
 
     </form>
+        </div>
+    </div>
 
     <script>
 
@@ -46,6 +51,6 @@
             </ul>
         </div>
     @endif
-
+    <script src="{{ asset('js/app.js') }}"></script>
 
 
